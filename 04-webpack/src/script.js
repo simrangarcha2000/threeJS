@@ -18,14 +18,21 @@ const material = new THREE.MeshBasicMaterial({
 const cube = new THREE.Mesh(geometry,material);
 
 //Making the mesh a 3D object
-cube.position.x = 0.7
+/*cube.position.x = 0.7
 cube.position.y = -0.6
-cube.position.z = 1
+cube.position.z = 1*/
+//Use top property together as one
+cube.position.set(0.7,-0.6,1)
 
-
+//So that position remains  1 
+//cube.position.normalize()
 
 //Add Mesh to Scene
 scene.add(cube)
+
+console.log(cube.position.length())
+
+
 
 //Camera -> Point of view -> Not visible 
 //Two Parameter
@@ -48,6 +55,7 @@ camera.position.z = 3
 //Always add everything to the scene
 scene.add(camera)
 
+console.log(cube.position.distanceTo(camera.position))
 
 //Connect to HTML canvas
 const canvashtml = document.querySelector('.renderPro')
