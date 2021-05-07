@@ -17,6 +17,13 @@ const material = new THREE.MeshBasicMaterial({
 //Creating Mesh
 const cube = new THREE.Mesh(geometry,material);
 
+//Making the mesh a 3D object
+cube.position.x = 0.7
+cube.position.y = -0.6
+cube.position.z = 1
+
+
+
 //Add Mesh to Scene
 scene.add(cube)
 
