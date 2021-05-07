@@ -1,5 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
+import { Mesh } from 'three'
 
 //Creating a scene
 const scene = new THREE.Scene()
@@ -23,6 +24,22 @@ cube.position.y = -0.6
 cube.position.z = 1*/
 //Use top property together as one
 cube.position.set(0.7,-0.6,1)
+
+//Scale -> 
+/*cube.scale.x = 2
+cube.scale.y = 0.5
+cube.scale.z = 0.5*/
+
+//Or -> Vector3
+
+cube.scale.set(2,0.5,0.5)
+
+//Rotation -> Euler -> good value -> pi -> half rotation or use Math.PI
+cube.rotation.x = 3.14159
+//cube.rotation.y = Math.PI
+cube.rotation.y = Math.PI * 0.25
+cube.rotation.z = Math.PI * 0.25
+
 
 //So that position remains  1 
 //cube.position.normalize()
@@ -57,6 +74,10 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height )
 
 //Change poition of Camera - Step Last
 camera.position.z = 3
+/*camera.position.x = 1
+camera.position.y = 1*/
+
+
 
 //Always add everything to the scene
 scene.add(camera)
