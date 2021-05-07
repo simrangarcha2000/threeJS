@@ -33,6 +33,12 @@ scene.add(cube)
 console.log(cube.position.length())
 
 
+//Axes Helper 
+
+const axesHelper = new THREE.AxesHelper()
+scene.add(axesHelper)
+
+
 
 //Camera -> Point of view -> Not visible 
 //Two Parameter
