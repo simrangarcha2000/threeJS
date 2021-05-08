@@ -84,11 +84,18 @@ const tick = () =>
     //mesh.rotation.y = elapsedTime;
 
     //Update Camera
+
     //Adding the value for moving mouse here and multiplying so we move even more further
-    camera.position.x = cursor.x * 3
+    camera.position.x = cursor.x * 10
     camera.position.y =  cursor.y * 3
     //camera.lookAt(new THREE.Vector3())
     //or
+
+
+    //The position value just move on an axis but we need to move in a arotation so we use a new function
+    camera.position.x = Math.sin(cursor.x * 2 * Math.PI) * 3
+    camera.position.z =  Math.cos(cursor.x * 2 * Math.PI) * 3
+    camera.position.y =  cursor.y * 5
     camera.lookAt(mesh.position)
 
 
