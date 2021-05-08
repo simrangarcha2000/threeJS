@@ -24,10 +24,11 @@ const mesh = new THREE.Mesh(
 scene.add(mesh)
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1,1000)
 camera.position.x = 2
 camera.position.y = 2
 camera.position.z = 2
+console.log(camera.position.length());
 camera.lookAt(mesh.position)
 scene.add(camera)
 
@@ -56,3 +57,15 @@ const tick = () =>
 
 tick()
 
+//Cameras 
+/**
+ * Prespective Camera(
+ * 1 - Vertical Field of View (in deg), 
+ *      more field of View more distance from object -> 140 -> distant
+ *      Recommended - 45 to 75 -> depends on you too
+ * 2- Aspect Ratio (width/height)
+ * 3- Near
+ * 4- Far 
+ * 
+ * )
+ */
