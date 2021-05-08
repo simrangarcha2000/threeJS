@@ -24,7 +24,9 @@ const mesh = new THREE.Mesh(
 scene.add(mesh)
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1,1000)
+//const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1,100)
+const aspectRation = sizes.width / sizes.height;
+const camera = new THREE.OrthographicCamera(-1 * aspectRation,1* aspectRation,1,-1, 0.1, 100 )
 camera.position.x = 2
 camera.position.y = 2
 camera.position.z = 2
@@ -64,8 +66,27 @@ tick()
  *      more field of View more distance from object -> 140 -> distant
  *      Recommended - 45 to 75 -> depends on you too
  * 2- Aspect Ratio (width/height)
- * 3- Near
- * 4- Far 
+ * 3- Near 
+ * 4- Far -> calculate the disctance and put the value more than it to visible all parts of the object 
+ * console.log(camera.position.length());
+ * if extreme value -> Z-fighting
  * 
  * )
+ */
+
+// -------------------------------- ORTHOGRAPHIC CAMERA
+
+/**
+ * OrthographicCamera (
+ * Left *  aspectRatio
+ * Right *  aspectRatio
+ * Top 
+ * Bottom 
+ * Near 
+ * Far 
+ * )
+ * 
+ * But then the size of cube changes according to the canvas so we use aspect Ration and multiply it either with horizontal or vertical parameters
+ * 
+ * aspectRatio = width/height
  */
