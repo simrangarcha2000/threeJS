@@ -34,11 +34,18 @@ renderer.setSize(sizes.width, sizes.height)
 //Time
 let time = Date.now()
 
+//Clock 
+const clock = new THREE.Clock()
+
+
 //Animation
 const tick = () => {
+    
 
+    //Clock 
+    const elapsedTime = clock.getElapsedTime()
 
-    //Time
+    /*//Time
 
     //Time after animation
     const currentTime = Date.now()
@@ -51,7 +58,13 @@ const tick = () => {
     /*mesh.position.x += 0.01
     mesh.position.y += 0.01*/
     //So that animation is not too fast nor slow
-    mesh.rotation.y += 0.001 * deltaTime
+    //mesh.rotation.y += 0.001 * deltaTime
+
+
+    mesh.rotation.y = elapsedTime * Math.PI * 2
+
+    mesh.position.y = Math.sin(elapsedTime)
+    mesh.position.x = Math.cos(elapsedTime)
 
     //Render
     renderer.render(scene, camera)
@@ -62,4 +75,8 @@ const tick = () => {
 
 }
 
+
+
 tick()
+
+clockAnimation()
