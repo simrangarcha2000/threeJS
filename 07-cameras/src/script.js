@@ -2,6 +2,37 @@ import './style.css'
 import * as THREE from 'three'
 
 /**
+ * Cursor
+ */
+
+const cursor = {
+    x: 0,
+    y: 0
+}
+
+window.addEventListener('mousemove', (funcName) => {
+
+    //Checks the X -axis of the moving Cursor
+    //We dived by width to make the X axis go btw 0 to 1 
+    //we minused it with 0.5 to give it btw -0.5 to +0.5
+    console.log(funcName.clientX)
+
+    //Checks the Y -axis of the moving Cursor -> in px (not recommended)
+    console.log(funcName.clientY)
+
+    cursor.x = funcName.clientX / sizes.width - 0.5
+    cursor.y = funcName.clientY / sizes.height - 0.5
+
+        //we minused it with 0.5 to give it btw -0.5 to +0.5
+    console.log(cursor.x)
+
+    //Checks the Y -axis of the moving Cursor -> in px (not recommended)
+    console.log(cursor.y)
+
+
+})
+
+/**
  * Base
  */
 // Canvas
@@ -24,12 +55,12 @@ const mesh = new THREE.Mesh(
 scene.add(mesh)
 
 // Camera
-//const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1,100)
-const aspectRation = sizes.width / sizes.height;
-const camera = new THREE.OrthographicCamera(-1 * aspectRation,1* aspectRation,1,-1, 0.1, 100 )
-camera.position.x = 2
-camera.position.y = 2
-camera.position.z = 2
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1,100)
+/*const aspectRation = sizes.width / sizes.height;
+const camera = new THREE.OrthographicCamera(-1 * aspectRation,1* aspectRation,1,-1, 0.1, 100 )*/
+/*camera.position.x = 2
+camera.position.y = 2*/
+camera.position.z = 3
 console.log(camera.position.length());
 camera.lookAt(mesh.position)
 scene.add(camera)
@@ -48,7 +79,12 @@ const tick = () =>
     const elapsedTime = clock.getElapsedTime()
 
     // Update objects
-    mesh.rotation.y = elapsedTime;
+    //mesh.rotation.y = elapsedTime;
+
+    //Update Camera
+    //Adding the value for moving mouse here and multiplying so we move even more further
+    camera.position.x = cursor.x * 3
+    camera.position.y =  cursor.y * 3
 
     // Render
     renderer.render(scene, camera)
@@ -74,7 +110,7 @@ tick()
  * )
  */
 
-// -------------------------------- ORTHOGRAPHIC CAMERA
+// -------------------------------- ORTHOGRAPHIC CAMERA-----------------
 
 /**
  * OrthographicCamera (
@@ -89,4 +125,13 @@ tick()
  * But then the size of cube changes according to the canvas so we use aspect Ration and multiply it either with horizontal or vertical parameters
  * 
  * aspectRatio = width/height
+ */
+
+// -------------------------------- MOVE THE  CAMERA -----------
+
+/**
+ * Normal JS
+ * Use MouseMove and provide a func
+ * btw +0.5 to -0.5 
+ * Go inside Animation func
  */
