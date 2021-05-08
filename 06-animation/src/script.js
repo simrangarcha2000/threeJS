@@ -29,4 +29,37 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
 renderer.setSize(sizes.width, sizes.height)
-renderer.render(scene, camera)
+
+//Get the time before animation
+//Time
+let time = Date.now()
+
+//Animation
+const tick = () => {
+
+
+    //Time
+
+    //Time after animation
+    const currentTime = Date.now()
+
+    //Take difference and update the time before animation again
+    const deltaTime = currentTime - time;
+    time = currentTime
+
+    //Update objects
+    /*mesh.position.x += 0.01
+    mesh.position.y += 0.01*/
+    //So that animation is not too fast nor slow
+    mesh.rotation.y += 0.001 * deltaTime
+
+    //Render
+    renderer.render(scene, camera)
+
+    //sending to next frame
+    window.requestAnimationFrame(tick)
+
+
+}
+
+tick()
