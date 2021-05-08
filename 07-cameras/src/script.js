@@ -21,7 +21,9 @@ window.addEventListener('mousemove', (funcName) => {
     console.log(funcName.clientY)
 
     cursor.x = funcName.clientX / sizes.width - 0.5
-    cursor.y = funcName.clientY / sizes.height - 0.5
+
+    //But the mouse is moving invertedly so change to - (negative)
+    cursor.y = -(funcName.clientY / sizes.height - 0.5)
 
         //we minused it with 0.5 to give it btw -0.5 to +0.5
     console.log(cursor.x)
@@ -85,6 +87,10 @@ const tick = () =>
     //Adding the value for moving mouse here and multiplying so we move even more further
     camera.position.x = cursor.x * 3
     camera.position.y =  cursor.y * 3
+    //camera.lookAt(new THREE.Vector3())
+    //or
+    camera.lookAt(mesh.position)
+
 
     // Render
     renderer.render(scene, camera)
