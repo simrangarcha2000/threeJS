@@ -1,5 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 
 /**
  * Cursor
@@ -67,6 +68,11 @@ console.log(camera.position.length());
 camera.lookAt(mesh.position)
 scene.add(camera)
 
+//Controls
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+
+
 // Renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
@@ -86,17 +92,20 @@ const tick = () =>
     //Update Camera
 
     //Adding the value for moving mouse here and multiplying so we move even more further
-    camera.position.x = cursor.x * 10
-    camera.position.y =  cursor.y * 3
+    /*  camera.position.x = cursor.x * 10
+        camera.position.y =  cursor.y * 3 */
     //camera.lookAt(new THREE.Vector3())
     //or
 
 
     //The position value just move on an axis but we need to move in a arotation so we use a new function
-    camera.position.x = Math.sin(cursor.x * 2 * Math.PI) * 3
-    camera.position.z =  Math.cos(cursor.x * 2 * Math.PI) * 3
-    camera.position.y =  cursor.y * 5
-    camera.lookAt(mesh.position)
+    /*  camera.position.x = Math.sin(cursor.x * 2 * Math.PI) * 3
+        camera.position.z =  Math.cos(cursor.x * 2 * Math.PI) * 3
+        camera.position.y =  cursor.y * 5 */
+    //camera.lookAt(mesh.position)
+    
+    //update Controls
+    controls.update()
 
 
     // Render
@@ -148,3 +157,6 @@ tick()
  * btw +0.5 to -0.5 
  * Go inside Animation func
  */
+
+
+//Controls - Orbit Control
