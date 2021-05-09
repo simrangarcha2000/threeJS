@@ -30,9 +30,34 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Sizes
 const sizes = {
-    width: 800,
-    height: 600
+    width: window.innerWidth,
+    height: window.innerHeight
 }
+
+window.addEventListener('resize', () => {
+    console.log('window is resized')
+
+    //UPdate Sizes 
+    sizes.width = window.innerWidth
+    sizes.height = window.innerHeight
+
+    //Update Camera -> Aspect
+    camera.aspect = sizes.width / sizes.height
+    camera.updateProjectionMatrix()
+
+    //UPdat Rendered
+    renderer.setSize(sizes.width, sizes.height)
+
+    //console.log(window.devicePixelRatio) -> 2 is desired
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    /**
+     * To set Min Pixel ration for devices with more pixelration
+     * renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+     * where 2 will be the minimum value set 
+     */
+
+})
+
 
 // Scene
 const scene = new THREE.Scene()
@@ -61,6 +86,7 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
 renderer.setSize(sizes.width, sizes.height)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 // Animate
 const clock = new THREE.Clock()
