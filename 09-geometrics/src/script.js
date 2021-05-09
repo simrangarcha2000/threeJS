@@ -13,7 +13,51 @@ const scene = new THREE.Scene()
 
 // Object
 //Add 3, 3, 3 to create  more triangles -> segments
-const geometry = new THREE.BoxGeometry(1, 1, 1, 3, 3, 3)
+//const geometry = new THREE.BoxGeometry(1, 1, 1, 5, 5, 5)
+
+/**
+ * Creating a triangle has 3 verices and has (x,y,z)
+ */
+
+
+const geometry = new THREE.BufferGeometry()
+
+const positionsArray = new Float32Array([
+    //putting as Matrix
+
+    0, 0, 0,
+    0, 1, 0,
+    1, 0, 0
+
+])
+
+//Convert to three js buffer attribute
+
+const positionAttribute = new THREE.BufferAttribute(positionsArray, 3)
+
+//Send to Geometry 
+
+geometry.setAttribute('position',positionAttribute )
+
+/*
+//! 1st Vertex
+positionsArray[0] = 0
+positionsArray[1] = 0
+positionsArray[2] = 0
+
+//! 2nd Vertex
+positionsArray[3] = 0
+positionsArray[4] = 1
+positionsArray[5] = 0
+
+//! 3rd Vertex
+positionsArray[6] = 1
+positionsArray[7] = 0
+positionsArray[8] = 0
+
+Can be writen as a marix  see on top
+*/
+
 const material = new THREE.MeshBasicMaterial({ 
     color: 0xff0000,
     //wireframe shows the triangles
