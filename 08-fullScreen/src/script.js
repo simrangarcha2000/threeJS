@@ -58,6 +58,36 @@ window.addEventListener('resize', () => {
 
 })
 
+window.addEventListener('dblclick', () => {
+    console.log('double click')
+
+    const fullscreenElement = document.fullscreenElement || document.webkitfullscreenElement
+
+    if(!fullscreenElement)
+    {
+        if (canvas.requestFullscreen)
+        {
+            canvas.requestFullscreen()
+        }
+        else if(canvas.webkitRequestFullscreen){
+            canvas.webkitRequestFullscreen()
+        }
+    }
+    else
+    {
+        if(document.exitFullscreen){
+            document.exitFullscreen()
+            console.log('leave fullScreen')
+        }
+        else if(document.webkitExitFullscreen){
+            document.webkitExitFullscreen()
+            console.log('leave fullScreen -> Safari')
+
+        }
+        
+    }
+})
+
 
 // Scene
 const scene = new THREE.Scene()
