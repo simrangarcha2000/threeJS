@@ -1,26 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
-
-/**
- * Cursor
- */
-
-const cursor = {
-    x: 0,
-    y: 0
-}
-
-window.addEventListener('mousemove', (funcName) => {
-
-    cursor.x = funcName.clientX / sizes.width - 0.5
-
-    //But the mouse is moving invertedly so change to - (negative)
-    cursor.y = -(funcName.clientY / sizes.height - 0.5)
-
-
-
-})
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 /**
  * Base
@@ -28,88 +8,44 @@ window.addEventListener('mousemove', (funcName) => {
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
+// Scene
+const scene = new THREE.Scene()
+
+// Object
+const geometry = new THREE.BoxGeometry(1, 1, 1)
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)
+
 // Sizes
 const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () => {
-    console.log('window is resized')
-
-    //UPdate Sizes 
+window.addEventListener('resize', () =>
+{
+    // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
 
-    //Update Camera -> Aspect
+    // Update camera
     camera.aspect = sizes.width / sizes.height
     camera.updateProjectionMatrix()
 
-    //UPdat Rendered
+    // Update renderer
     renderer.setSize(sizes.width, sizes.height)
-
-    //console.log(window.devicePixelRatio) -> 2 is desired
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    /**
-     * To set Min Pixel ration for devices with more pixelration
-     * renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-     * where 2 will be the minimum value set 
-     */
-
 })
-
-window.addEventListener('dblclick', () => {
-    console.log('double click')
-
-    const fullscreenElement = document.fullscreenElement || document.webkitfullscreenElement
-
-    if(!fullscreenElement)
-    {
-        if (canvas.requestFullscreen)
-        {
-            canvas.requestFullscreen()
-        }
-        else if(canvas.webkitRequestFullscreen){
-            canvas.webkitRequestFullscreen()
-        }
-    }
-    else
-    {
-        if(document.exitFullscreen){
-            document.exitFullscreen()
-            console.log('leave fullScreen')
-        }
-        else if(document.webkitExitFullscreen){
-            document.webkitExitFullscreen()
-            console.log('leave fullScreen -> Safari')
-
-        }
-        
-    }
-})
-
-
-// Scene
-const scene = new THREE.Scene()
-
-// Object
-const mesh = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1, 5, 5, 5),
-    new THREE.MeshBasicMaterial({ color: 0xff0000 })
-)
-scene.add(mesh)
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1,100)
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.z = 3
-console.log(camera.position.length());
-camera.lookAt(mesh.position)
 scene.add(camera)
 
-//Controls
+// Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
-
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -123,17 +59,10 @@ const clock = new THREE.Clock()
 
 const tick = () =>
 {
-    //const elapsedTime = clock.getElapsedTime()
+    const elapsedTime = clock.getElapsedTime()
 
-    // Update objects
-
-    //Update Camera
-
-
-    
-    //update Controls
+    // Update controls
     controls.update()
-
 
     // Render
     renderer.render(scene, camera)
@@ -143,4 +72,3 @@ const tick = () =>
 }
 
 tick()
-
