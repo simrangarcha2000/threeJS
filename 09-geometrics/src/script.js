@@ -19,8 +19,22 @@ const scene = new THREE.Scene()
  * Creating a triangle has 3 verices and has (x,y,z)
  */
 
-
+//!   CREATING A GEOMETRY
 const geometry = new THREE.BufferGeometry()
+
+const count = 50
+const positionArray = new Float32Array(count * 3 * 3)
+
+for(let i = 0; i < count * 3 * 3; i++)
+{
+    positionArray[i] = (Math.random() - 0.5)
+}
+
+const positionsAttribute = new THREE.BufferAttribute(positionArray, 3)
+
+geometry.setAttribute('position',positionsAttribute )
+
+/*const geometry = new THREE.BufferGeometry()
 
 const positionsArray = new Float32Array([
     //putting as Matrix
