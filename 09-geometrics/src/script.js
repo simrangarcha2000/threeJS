@@ -12,8 +12,13 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 // Object
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+//Add 3, 3, 3 to create  more triangles -> segments
+const geometry = new THREE.BoxGeometry(1, 1, 1, 3, 3, 3)
+const material = new THREE.MeshBasicMaterial({ 
+    color: 0xff0000,
+    //wireframe shows the triangles
+    wireframe: true
+})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
