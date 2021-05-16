@@ -31,8 +31,6 @@ window.addEventListener('mousemove', (funcName) => {
 
     //Checks the Y -axis of the moving Cursor -> in px (not recommended)
     console.log(cursor.y)
-
-
 })
 
 /**
