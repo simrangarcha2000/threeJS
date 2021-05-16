@@ -8,16 +8,35 @@ import * as dat from 'dat.gui'
 /**
  * Debug
  */
-const gui = new dat.GUI()
+const gui = new dat.GUI({ closed: true, width: 400})
+//gui.hide()
+
+//Gui can only work with objects so we put the function in an object 
+
+
 
 const debugPara = {
-    color: 0xff0000
+    color: 0xff0000,
+    spin: () => {
+
+        console.log("spin")
+        gsap.to(mesh.rotation, {
+            duration: 1,
+            //we are adding 10 to the current position it is on
+            y: mesh.rotation.y + 10
+
+            }
+        )
+    
+    }
 }
 
 gui.addColor(debugPara, 'color').onChange(()=>{
     console.log("color changed")
     material.color.set(debugPara.color)
 })
+
+gui.add(debugPara, 'spin')
 
 
 
@@ -35,7 +54,7 @@ const scene = new THREE.Scene()
  * Object
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1, 3, 3, 3)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+const material = new THREE.MeshBasicMaterial({ color: debugPara.color })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
