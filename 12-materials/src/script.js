@@ -46,6 +46,14 @@ material.opacity = 0.5
 material.transparent = true
 material.alphaMap = alpha
 
+//To see the plane from both sides
+/**
+ * Backside
+ * Frontside
+ * DoubleSide
+ */
+material.side = THREE.DoubleSide
+
 /**
  *  //! Another Way 
  * material.map = doorColor
