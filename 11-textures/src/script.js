@@ -6,8 +6,42 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 /**
  * Textures
  */
+const loadingManager = new THREE.LoadingManager()
 
-const image = new Image()
+loadingManager.onStart = () => {
+    console.log('onStart')
+},
+() => {
+    console.log('onLoaded')
+},
+() => {
+    console.log('onProgress')
+}, 
+() => {
+    console.log('onError')
+}
+
+const textureLoader = new THREE.TextureLoader(loadingManager)
+const colorTexture = textureLoader.load('/textures/checkerboard-8x8.png');
+const alphaTexture = textureLoader.load('/textures/door/alpha.jpg');
+const heightTexture = textureLoader.load('/textures/door/height.jpg');
+const ambientTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg');
+const metalTexture = textureLoader.load('/textures/door/metalness.jpg');
+
+//2D co-ordinate
+/*colorTexture.repeat.x =  2
+colorTexture.repeat.y =  3*/
+/*colorTexture.wrapS = THREE.MirroredRepeatWrapping
+colorTexture.wrapT = THREE.RepeatWrapping
+
+colorTexture.offset.y =  0.5*/
+
+
+colorTexture.rotation = Math.PI/ 3
+colorTexture.center.x = 0.5
+colorTexture.center.y = 0.5
+
+/*const image = new Image()
 const texture = new THREE.Texture(image);
 
 image.onload = () => {
@@ -16,7 +50,13 @@ image.onload = () => {
     texture.needsUpdate = true
 }
 
+
+
 image.src = './textures/door/color.jpg'
+*/
+
+//colorTexture.minFilter = THREE.NearestFilter
+colorTexture.magFilter = THREE.NearestFilter
 
 
 /**
@@ -32,7 +72,7 @@ const scene = new THREE.Scene()
  * Object
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ map : texture })
+const material = new THREE.MeshBasicMaterial({ map : colorTexture })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
