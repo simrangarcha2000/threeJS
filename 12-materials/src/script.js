@@ -14,6 +14,7 @@ const gui = new dat.GUI({
  */
 
 const textureLoader = new THREE.TextureLoader()
+const cubeTextureLoader = new THREE.CubeTextureLoader()
 
 const door = textureLoader.load('./textures/door/color.jpg')
 const color = textureLoader.load('./textures/door/alpha.jpg')
@@ -27,6 +28,14 @@ const mat2 = textureLoader.load('./textures/matcaps/2.png')
 const mat7 = textureLoader.load('./textures/matcaps/7.png')
 const mat8 = textureLoader.load('./textures/matcaps/8.png')
 const grad8 = textureLoader.load('./textures/gradients/8.png')
+
+const env1 = cubeTextureLoader.load([
+    './textures/environmentMaps/0/px.jpg',
+    './textures/environmentMaps/0/nx.jpg',
+    './textures/environmentMaps/0/py.jpg',
+    './textures/environmentMaps/0/ny.jpg',
+    './textures/environmentMaps/0/pz.jpg',
+    './textures/environmentMaps/0/nz.jpg'])
 
 
 
@@ -80,9 +89,9 @@ material.flatShading = true*/
 
 
 const material = new THREE.MeshStandardMaterial()
-/*material.roughness = 0.45
-material.metalness = 0.45*/
-material.map = door
+material.roughness = 0.45
+material.metalness = 0.45
+/*material.map = door
 material.aoMap = ambient //To add Contrast , depth and shadows -> use another set of uv co-ordinates
 material.displacementMap = height // To create displacement add more subdivisions
 material.side = THREE.DoubleSide
@@ -92,7 +101,8 @@ material.roughnessMap = rough
 material.normalMap = normal
 material.normalScale.set(0.5,0.5)
 material.transparent = true
-material.alphaMap = color
+material.alphaMap = color*/
+material.envMap = env1
 
 
 gui.add(material, 'metalness', 0, 1, 0.01).name('Metal')
