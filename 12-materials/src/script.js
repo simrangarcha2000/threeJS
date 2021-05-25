@@ -1,8 +1,13 @@
 import './style.css'
 import * as THREE from 'three'
+import './style.css'
+import * as dat from 'dat.gui'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
-
+const gui = new dat.GUI({
+    closed: true,
+    width: 400
+})
 
 /**
  * TEXTURES
@@ -10,6 +15,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 const textureLoader = new THREE.TextureLoader()
 
+const door = textureLoader.load('./textures/door/color.jpg')
 const color = textureLoader.load('./textures/door/alpha.jpg')
 const metal = textureLoader.load('./textures/door/metalness.jpg')
 const rough = textureLoader.load('./textures/door/roughness.jpg')
@@ -20,6 +26,8 @@ const mat1 = textureLoader.load('./textures/matcaps/1.png')
 const mat2 = textureLoader.load('./textures/matcaps/2.png')
 const mat7 = textureLoader.load('./textures/matcaps/7.png')
 const mat8 = textureLoader.load('./textures/matcaps/8.png')
+const grad8 = textureLoader.load('./textures/gradients/8.png')
+
 
 
 
@@ -62,8 +70,26 @@ material.flatShading = true*/
 //! MESH DEPTH MATERIAL
 //const material = new THREE.MeshDepthMaterial()
 
+//! MESH LAMBERT MATERIAL
+//const material = new THREE.MeshLambertMaterial()
+
+//const material = new THREE.MeshToonMaterial()
+/**
+ * material.gradientMap
+ */
+
+
+const material = new THREE.MeshStandardMaterial()
+material.roughness = 0.45
+material.metalness = 0.45
+material.map = door
+material.aoMap = ambient //To add Contrast , depth and shadows -> use another set of uv co-ordinates
+
 material.side = THREE.DoubleSide
 
+gui.add(material, 'metalness', 0, 1, 0.01).name('Metal')
+gui.add(material, 'roughness', 0, 1, 0.01).name('Rough')
+gui.add(material, 'wireframe').name('WireFrame')
 
 
 const sphere = new THREE.Mesh(
@@ -73,6 +99,13 @@ const sphere = new THREE.Mesh(
 const plane = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(1, 1), material
 )
+
+/**
+ * SETTING FOR AMBIENT LIGHT
+ */
+console.log(plane.geometry.attributes.uv)
+
+plane.geometry.setAttribute('uv2', new THREE.BufferAttribute(plane.geometry.attributes.uv.array))
 
 plane.position.x = 1.5
 
@@ -90,7 +123,7 @@ scene.add(sphere, plane, torus)
 */
 
 const ambientLight = new THREE.AmbientLight(0xfffffff, 0.5)
-const pointLight = new THREE.PointtLight(0xfffffff, 0.5)
+const pointLight = new THREE.PointLight(0xfffffff, 0.5)
 pointLight.position.x = 2
 pointLight.position.y = 3
 pointLight.position.z = 4
