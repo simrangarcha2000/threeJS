@@ -1,6 +1,8 @@
 import './style.css'
 import * as THREE from 'three'
 import * as dat from 'dat.gui'
+import gsap from 'gsap'
+
 
 const gui = new dat.GUI({ closed: true, width: 400})
 
@@ -33,6 +35,8 @@ const sizes = {
     height: 600
 }
 
+
+
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
 
 camera.position.z = 3
@@ -49,4 +53,26 @@ renderer.setSize(
     sizes.width, sizes.height
 )
 
-renderer.render(scene, camera)
+
+//ANIMATION
+
+const clock = new THREE.Clock()
+
+const tick = () => {
+
+    //Clock 
+    const elapsedTime = clock.getElapsedTime()
+    cube.rotation.y = elapsedTime * Math.PI * 1.4
+    cube.position.z = Math.cos(elapsedTime)
+    camera.position.x = Math.cos(elapsedTime)
+
+    renderer.render(scene, camera)
+
+    window.requestAnimationFrame(tick)
+
+}
+
+tick()
+
+
+
