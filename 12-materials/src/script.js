@@ -38,7 +38,8 @@ const scene = new THREE.Scene()
  * Objects
  */
 
-const material = new THREE.MeshBasicMaterial({
+//! MESH BASIC MATERIAL
+/*const material = new THREE.MeshBasicMaterial({
     //color: 'peach',
     map: color,
     opacity: 0.5,
@@ -46,8 +47,12 @@ const material = new THREE.MeshBasicMaterial({
 })
 
 material.side = THREE.DoubleSide
+material.color = new THREE.Color('#f0f')*/
 
-material.color = new THREE.Color('#f0f')
+//! MESH NORMAL MATERIAL
+const material = new THREE.MeshNormalMaterial()
+//material.wireframe = true
+material.flatShading = true
 
 
 const sphere = new THREE.Mesh(
