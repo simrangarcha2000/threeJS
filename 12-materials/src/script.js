@@ -2,21 +2,25 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
+
+
 /**
- * Textures
+ * TEXTURES
  */
 
 const textureLoader = new THREE.TextureLoader()
 
-const doorColor = textureLoader.load('/textures/door/color.jpg')
-const alpha = textureLoader.load('/textures/door/alpha.jpg')
-const ambient = textureLoader.load('/textures/door/ambientOcclusion.jpg')
-const height = textureLoader.load('/textures/door/height.jpg')
-const normal = textureLoader.load('/textures/door/normal.jpg')
-const metal = textureLoader.load('/textures/door/metalness.jpg')
-const rough = textureLoader.load('/textures/door/roughness.jpg')
-const matCapTexture = textureLoader.load('/textures/matcaps/1.png')
-const gradientTexture = textureLoader.load('/textures/gradients/1.png')
+const color = textureLoader.load('./textures/door/alpha.jpg')
+const metal = textureLoader.load('./textures/door/metalness.jpg')
+const rough = textureLoader.load('./textures/door/roughness.jpg')
+const ambient = textureLoader.load('./textures/door/ambientOcclusion.jpg')
+const height = textureLoader.load('./textures/door/height.jpg')
+const normal = textureLoader.load('./textures/door/normal.jpg')
+const mat1 = textureLoader.load('./textures/matcaps/1.png')
+const mat2 = textureLoader.load('./textures/matcaps/2.png')
+const mat7 = textureLoader.load('./textures/matcaps/7.png')
+const mat8 = textureLoader.load('./textures/matcaps/8.png')
+
 
 
 
@@ -29,60 +33,41 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+
 /**
- * Object 
+ * Objects
  */
 
 const material = new THREE.MeshBasicMaterial({
-    //color: 'pink',
-    map : doorColor
-});
+    //color: 'peach',
+    map: color,
+    opacity: 0.5,
+    transparent: true
+})
 
-
-//material.wireframe = true
-material.color.set('red')
-
-material.opacity = 0.5
-material.transparent = true
-material.alphaMap = alpha
-
-//To see the plane from both sides
-/**
- * Backside
- * Frontside
- * DoubleSide
- */
 material.side = THREE.DoubleSide
 
-/**
- *  //! Another Way 
- * material.map = doorColor
- * 
- * For Color 
- * material.color = new THREE.Color('green')
- */
+material.color = new THREE.Color('#f0f')
+
 
 const sphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry(0.5,16,16),
-    material
+    new THREE.SphereBufferGeometry(0.5,16, 16), material
 )
-
-sphere.position.x = -1.5
-
 
 const plane = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(1,1),
-    material
+    new THREE.PlaneBufferGeometry(1, 1), material
 )
+
+plane.position.x = 1.5
 
 const torus = new THREE.Mesh(
-    new THREE.TorusBufferGeometry(0.5, 0.2, 16,32),
-    material
+    new THREE.TorusBufferGeometry(0.3,0.2,16,32), material
 )
 
-torus.position.x = 1.5
+torus.position.x = -1.5
 
-scene.add(plane,sphere, torus)
+
+scene.add(sphere, plane, torus)
 
 
 
@@ -141,14 +126,16 @@ const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
 
-    //update objects
+    //UPdate Object
     sphere.rotation.y = elapsedTime * 0.1
-    plane.rotation.y = elapsedTime * 0.1
     torus.rotation.y = elapsedTime * 0.1
+    plane.rotation.y = elapsedTime * 0.5
 
-    sphere.rotation.x = elapsedTime * 0.15
-    plane.rotation.x = elapsedTime * 0.15
-    torus.rotation.x = elapsedTime * 0.15
+    sphere.rotation.x = elapsedTime * 0.1
+    torus.rotation.x = elapsedTime * 0.1
+    plane.rotation.x = elapsedTime * 0.5
+
+
 
     // Update controls
     controls.update()
