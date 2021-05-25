@@ -60,9 +60,11 @@ material.flatShading = true*/
 })*/
 
 //! MESH DEPTH MATERIAL
-const material = new THREE.MeshDepthMaterial()
+//const material = new THREE.MeshDepthMaterial()
 
 material.side = THREE.DoubleSide
+
+
 
 const sphere = new THREE.Mesh(
     new THREE.SphereBufferGeometry(0.5,16, 16), material
@@ -83,7 +85,18 @@ torus.position.x = -1.5
 
 scene.add(sphere, plane, torus)
 
+/*
+* LIGHTS
+*/
 
+const ambientLight = new THREE.AmbientLight(0xfffffff, 0.5)
+const pointLight = new THREE.PointtLight(0xfffffff, 0.5)
+pointLight.position.x = 2
+pointLight.position.y = 3
+pointLight.position.z = 4
+
+
+scene.add (ambientLight, pointLight)
 
 /**
  * Sizes
