@@ -1,7 +1,13 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+//Another way
+import typefaceFont from 'three/examples/fonts/helvetiker_regular.typeface.json'
 import * as dat from 'dat.gui'
+
+
+
+
 
 /**
  * Base
@@ -19,6 +25,20 @@ const scene = new THREE.Scene()
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
+
+/**
+ * FONT LOADER
+ */
+
+const fontLoader = new THREE.FontLoader()
+//we cannot use a constant like a textureeLoader
+fontLoader.load(
+    '/fonts/optimer_regular.typeface.json',
+    ()=>{
+        console.log("Font Loaded")
+    }
+)
+
 
 /**
  * Object
