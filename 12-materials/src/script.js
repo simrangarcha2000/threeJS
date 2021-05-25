@@ -55,9 +55,14 @@ material.color = new THREE.Color('#f0f')*/
 material.flatShading = true*/
 
 //! MESH MATCAP MATERIAL
-const material = new THREE.MeshMatcapMaterial({
+/*const material = new THREE.MeshMatcapMaterial({
     matcap: mat8
-})
+})*/
+
+//! MESH DEPTH MATERIAL
+const material = new THREE.MeshDepthMaterial()
+
+material.side = THREE.DoubleSide
 
 const sphere = new THREE.Mesh(
     new THREE.SphereBufferGeometry(0.5,16, 16), material
