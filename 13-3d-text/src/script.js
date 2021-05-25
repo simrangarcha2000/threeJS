@@ -34,8 +34,29 @@ const fontLoader = new THREE.FontLoader()
 //we cannot use a constant like a textureeLoader
 fontLoader.load(
     '/fonts/optimer_regular.typeface.json',
-    ()=>{
+    (font)=>{
         console.log("Font Loaded")
+        //Adding the geometry
+        const textGeometry = new THREE.TextBufferGeometry(
+            'Simran Garcha',
+            {
+                font: font,
+                size: 0.5,
+                height: 0.2,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0,
+                bevelOffset: 0,
+                bevelSegments: 5
+            }
+        )
+        //adding Material
+        const textMaterial = new THREE.MeshBasicMaterial({
+            wireframe: true
+        })
+        const text = new THREE.Mesh (textGeometry, textMaterial)
+        scene.add(text)
     }
 )
 
