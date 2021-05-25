@@ -22,13 +22,16 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 //Axes Helper
-const axes = new THREE.AxesHelper()
-scene.add(axes)
+/*const axes = new THREE.AxesHelper()
+scene.add(axes)*/
 
 /**
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
+const matcap1 = textureLoader.load('./textures/matcaps/1.png')
+const matcap2= textureLoader.load('./textures/matcaps/2.png')
+const matcap3 = textureLoader.load('./textures/matcaps/3.png')
 
 /**
  * FONT LOADER
@@ -57,22 +60,35 @@ fontLoader.load(
         )
 
         //Creating a box geometry from a sphere geometry
-        textGeometry.computeBoundingBox()
+        /*textGeometry.computeBoundingBox()
         console.log(textGeometry.boundingBox)
         textGeometry.translate(
             - (textGeometry.boundingBox.max.x * - 0.02) * -(0.20),
             - (textGeometry.boundingBox.max.y * - 0.02) * 0.5,
             - (textGeometry.boundingBox.max.z * -0.02) * 0.5
         )
-
+        
         textGeometry.computeBoundingBox()
-        console.log(textGeometry.boundingBox)
+        console.log(textGeometry.boundingBox)*/
         //adding Material
-        const textMaterial = new THREE.MeshBasicMaterial({
-            wireframe: true
+        textGeometry.center()
+        const textMaterial = new THREE.MeshMatcapMaterial({
+            //wireframe: true,
+            matcap : matcap1
         })
         const text = new THREE.Mesh (textGeometry, textMaterial)
         scene.add(text)
+
+        for(let i = 0; i< 100; i++)
+        {
+            const donutGeometry = new THREE.TorusBufferGeometry(0.3,0.2,20,45)
+            const donutMaterial = new THREE.MeshMatcapMaterial({
+                //wireframe: true,
+                matcap : matcap1
+            })
+            const donut = new THREE.Mesh(donutGeometry,donutMaterial)
+            scene.add(donut)
+        }
     }
 )
 
