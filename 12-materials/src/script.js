@@ -90,6 +90,7 @@ material.side = THREE.DoubleSide
 gui.add(material, 'metalness', 0, 1, 0.01).name('Metal')
 gui.add(material, 'roughness', 0, 1, 0.01).name('Rough')
 gui.add(material, 'wireframe').name('WireFrame')
+gui.add(material, 'aoMapIntensity', 0, 1, 0.01).name('Intensity of Depth')
 
 
 const sphere = new THREE.Mesh(
@@ -104,14 +105,28 @@ const plane = new THREE.Mesh(
  * SETTING FOR AMBIENT LIGHT
  */
 console.log(plane.geometry.attributes.uv)
-
-plane.geometry.setAttribute('uv2', new THREE.BufferAttribute(plane.geometry.attributes.uv.array))
-
+//name, new Array
 plane.position.x = 1.5
+
+sphere.geometry.setAttribute(
+    'uv2',
+    new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2) //Two Co-ordinates    
+    )
+
+    plane.geometry.setAttribute(
+        'uv2',
+        new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2)  
+        )
+    
 
 const torus = new THREE.Mesh(
     new THREE.TorusBufferGeometry(0.3,0.2,16,32), material
 )
+
+torus.geometry.setAttribute(
+    'uv2',
+    new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2)
+    )
 
 torus.position.x = -1.5
 
