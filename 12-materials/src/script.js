@@ -80,25 +80,35 @@ material.flatShading = true*/
 
 
 const material = new THREE.MeshStandardMaterial()
-material.roughness = 0.45
-material.metalness = 0.45
+/*material.roughness = 0.45
+material.metalness = 0.45*/
 material.map = door
 material.aoMap = ambient //To add Contrast , depth and shadows -> use another set of uv co-ordinates
-
+material.displacementMap = height // To create displacement add more subdivisions
 material.side = THREE.DoubleSide
+material.displacementScale = 0.05
+material.metalnessMap = metal
+material.roughnessMap = rough
+material.normalMap = normal
+material.normalScale.set(0.5,0.5)
+material.transparent = true
+material.alphaMap = color
+
 
 gui.add(material, 'metalness', 0, 1, 0.01).name('Metal')
 gui.add(material, 'roughness', 0, 1, 0.01).name('Rough')
 gui.add(material, 'wireframe').name('WireFrame')
 gui.add(material, 'aoMapIntensity', 0, 1, 0.01).name('Intensity of Depth')
+gui.add(material, 'displacementScale', 0, 1, 0.01).name('Scale Displacement')
+
 
 
 const sphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry(0.5,16, 16), material
+    new THREE.SphereBufferGeometry(0.5,64, 64), material
 )
 
 const plane = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(1, 1), material
+    new THREE.PlaneBufferGeometry(1, 1, 100, 100), material
 )
 
 /**
@@ -120,7 +130,7 @@ sphere.geometry.setAttribute(
     
 
 const torus = new THREE.Mesh(
-    new THREE.TorusBufferGeometry(0.3,0.2,16,32), material
+    new THREE.TorusBufferGeometry(0.3,0.2,64,128), material
 )
 
 torus.geometry.setAttribute(
