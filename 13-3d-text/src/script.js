@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 //Another way
 import typefaceFont from 'three/examples/fonts/helvetiker_regular.typeface.json'
 import * as dat from 'dat.gui'
+import gsap from 'gsap'
 
 
 
@@ -72,7 +73,7 @@ fontLoader.load(
         console.log(textGeometry.boundingBox)*/
         //adding Material
         textGeometry.center()
-        const textMaterial = new THREE.MeshMatcapMaterial({
+        const textMaterial = new THREE.MeshNormalMaterial({
             //wireframe: true,
             matcap : matcap1
         })
@@ -81,14 +82,17 @@ fontLoader.load(
 
         console.time('donuts')
 
+        const donutGeometry = new THREE.TorusBufferGeometry(0.3,0.2,20,45)
+        /*const donutMaterial = new THREE.MeshMatcapMaterial({
+            //wireframe: true,
+            matcap : matcap1
+        })*/
+
+
         for(let i = 0; i< 100; i++)
         {
-            const donutGeometry = new THREE.TorusBufferGeometry(0.3,0.2,20,45)
-            const donutMaterial = new THREE.MeshMatcapMaterial({
-                //wireframe: true,
-                matcap : matcap1
-            })
-            const donut = new THREE.Mesh(donutGeometry,donutMaterial)
+
+            const donut = new THREE.Mesh(donutGeometry,textMaterial)
 
             donut.position.x = (Math.random() - 0.5) * 10
             donut.position.y = (Math.random() - 0.5) * 10
@@ -105,7 +109,6 @@ fontLoader.load(
 
 
         }
-
         console.timeEnd('donuts')
     }
 )
@@ -167,6 +170,12 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+/*gsap.to(donut),{
+    x: 20
+
+}*/
+
+
 /**
  * Animate
  */
@@ -175,6 +184,8 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+    //text.position.x = elapsedTime 
+    //mesh.rotation.y = elapsedTime * Math.PI * 2
 
     // Update controls
     controls.update()
