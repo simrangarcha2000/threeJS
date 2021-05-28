@@ -23,6 +23,7 @@ import { PointLight } from 'three'
 
 const textureLoader = new THREE.TextureLoader()
 const bakedShadows = textureLoader.load('/textures/bakedShadow.jpg')
+const simpleShadows = textureLoader.load('/textures/simpleShadow.jpg')
 
 /**
  * Base
@@ -139,13 +140,20 @@ const sphere = new THREE.Mesh(
 //Shadow
 sphere.castShadow = true
 
+
+const plane = new THREE.Mesh(
+    new THREE.PlaneGeometry(5, 5),
+    material
+)
+
+/*
 const plane = new THREE.Mesh(
     new THREE.PlaneGeometry(5, 5),
 
     new THREE.MeshBasicMaterial({
         map: bakedShadows
     })
-)
+)*/
 plane.rotation.x = - Math.PI * 0.5
 plane.position.y = - 0.5
 
@@ -154,6 +162,19 @@ plane.receiveShadow = true
 
 scene.add(sphere, plane)
 
+const sphereShadow = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(1.5,1.5),
+    new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        transparent: true,
+        alphaMap : simpleShadows
+    })
+)
+
+sphereShadow.rotation.x = - Math.PI * 0.5
+sphereShadow.position.y = plane.position.y + 0.01
+
+sphere.add(sphereShadow)
 
 /**
  * Sizes
@@ -217,6 +238,18 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+
+    //Update Sphere
+    sphere.position.x = Math.cos(elapsedTime) * 1.5
+    sphere.position.z = Math.sin(elapsedTime) * 1.5
+    //Keeping the bounce on the surface 
+    sphere.position.y = Math.abs(Math.sin(elapsedTime * 3) )
+
+
+    //Update the Shadow 
+    sphereShadow.position.x = sphere.position.x
+    sphereShadow.position.z = sphere.position.z
+    sphereShadow.material.opacity = (1- sphere.position.y) * 0.7
 
     // Update controls
     controls.update()
