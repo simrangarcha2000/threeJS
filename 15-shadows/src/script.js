@@ -32,12 +32,12 @@ const scene = new THREE.Scene()
  * Lights
  */
 // Ambient light
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
 gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
 scene.add(ambientLight)
 
 // Directional light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5)
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.4)
 directionalLight.position.set(2, 2, - 1)
 gui.add(directionalLight, 'intensity').min(0).max(1).step(0.001)
 gui.add(directionalLight.position, 'x').min(- 5).max(5).step(0.001)
@@ -59,12 +59,28 @@ directionalLight.shadow.camera.bottom = -2
 directionalLight.shadow.camera.near = 1
 directionalLight.shadow.camera.far = 6
 
+//For blur of the shadow
+directionalLight.shadow.radius = 10
+
 
 
 //To see how far the light is creating the shadow map of 
 const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
 directionalLightCameraHelper.visible = false
 scene.add(directionalLightCameraHelper)
+
+
+
+//SPOT LIGHT 
+const spotLight = new THREE.SpotLight(0xffffff, 0.4, 10, Math.PI * 0.3)
+spotLight.castShadow = true
+
+spotLight.position.set(0,2,2)
+scene.add(spotLight)
+scene.add(spotLight.target)
+
+const spotLightHelper = new THREE.CameraHelper(spotLight.shadow.camera)
+scene.add(spotLightHelper)
 
 /**
  * Materials
@@ -149,6 +165,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 //Shadow
 renderer.shadowMap.enabled = true
+//There are two types for non blurry chadow use PCFSoft
+renderer.shadowMap.type = THREE. PCFSoftShadowMap
 
 /**
  * Animate
