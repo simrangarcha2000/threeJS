@@ -18,6 +18,13 @@ import { PointLight } from 'three'
  */
 
 /**
+ * TEXTURES
+ */
+
+const textureLoader = new THREE.TextureLoader()
+const bakedShadows = textureLoader.load('/textures/bakedShadow.jpg')
+
+/**
  * Base
  */
 // Debug
@@ -134,7 +141,10 @@ sphere.castShadow = true
 
 const plane = new THREE.Mesh(
     new THREE.PlaneGeometry(5, 5),
-    material
+
+    new THREE.MeshBasicMaterial({
+        map: bakedShadows
+    })
 )
 plane.rotation.x = - Math.PI * 0.5
 plane.position.y = - 0.5
