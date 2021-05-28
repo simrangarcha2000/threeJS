@@ -193,7 +193,9 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 //Shadow
-renderer.shadowMap.enabled = true
+
+//!SHADOW TURNED OFF
+renderer.shadowMap.enabled = false
 //There are two types for non blurry chadow use PCFSoft
 renderer.shadowMap.type = THREE. PCFSoftShadowMap
 
