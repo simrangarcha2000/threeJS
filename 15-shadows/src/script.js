@@ -4,6 +4,19 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 
 /**
+ * ACTIVATE SHADOWS 
+ * 
+ * renderer.shadowMap.enabled = true 
+ * See what can receive and what can cast shadow
+ * 
+ * Support Shados - Directional , Point and Spot
+ * 
+ * Actovate shadow n each lights
+ * 
+ * directionalLight.castShadow = true
+ */
+
+/**
  * Base
  */
 // Debug
@@ -32,9 +45,27 @@ gui.add(directionalLight.position, 'y').min(- 5).max(5).step(0.001)
 gui.add(directionalLight.position, 'z').min(- 5).max(5).step(0.001)
 scene.add(directionalLight)
 
+//Shadow of Light
 directionalLight.castShadow = true
-directionalLight.shadow.mapSize.width = 1024 
+directionalLight.shadow.mapSize.width = 1024 //Power of 2 value
 directionalLight.shadow.mapSize.height = 1024 
+
+//Reducing amplitude of an orthographic camera
+directionalLight.shadow.camera.top = 2
+directionalLight.shadow.camera.right = 2
+directionalLight.shadow.camera.left = -2
+directionalLight.shadow.camera.bottom = -2
+
+directionalLight.shadow.camera.near = 1
+directionalLight.shadow.camera.far = 6
+
+
+
+//To see how far the light is creating the shadow map of 
+const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
+directionalLightCameraHelper.visible = false
+scene.add(directionalLightCameraHelper)
+
 /**
  * Materials
  */
@@ -53,6 +84,7 @@ const sphere = new THREE.Mesh(
     material
 )
 
+//Shadow
 sphere.castShadow = true
 
 const plane = new THREE.Mesh(
@@ -62,6 +94,7 @@ const plane = new THREE.Mesh(
 plane.rotation.x = - Math.PI * 0.5
 plane.position.y = - 0.5
 
+//Shadow
 plane.receiveShadow = true
 
 scene.add(sphere, plane)
@@ -114,6 +147,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+//Shadow
 renderer.shadowMap.enabled = true
 
 /**
