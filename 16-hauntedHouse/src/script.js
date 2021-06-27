@@ -71,7 +71,7 @@ scene.add(house)
 
 //Walls
 const walls = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(4,6,4),
+    new THREE.BoxBufferGeometry(4,2.5,4),
     new THREE.MeshStandardMaterial({
         map: bricks,
         transparent: true,

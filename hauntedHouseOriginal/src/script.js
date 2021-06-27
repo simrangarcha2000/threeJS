@@ -49,20 +49,26 @@ scene.add(house)
 
 //Walls
 
-const walls = new THREE.Mesh(
-    new THREE.BoxGeometry(3, 3, 3),
+const sideWall = new THREE.Mesh(
+    new THREE.BoxGeometry(1,3.5,2),
     new THREE.MeshBasicMaterial({
-        color: '#4f061f'
+        color: 'green'
     })
 )
 
-walls.position.set(2,1.5,2)//x,y,z
+sideWall.position.set(-10, 1.75, 10)
+
+
+let wall1 = gui.addFolder('Side Wall');
+wall1.add(sideWall.position,'x').min(-10).max(10).step(0.001).name('Left-Right')
+wall1.add(sideWall.position,'y').min(-10).max(10).step(0.001).name('Top-Bottom')
+wall1.add(sideWall.position,'z').min(-10).max(10).step(0.001).name('Left-Right')
 
 /**
  * y is the half of the original
  */
 
-house.add(walls)
+house.add(sideWall)
 
 
 
@@ -85,9 +91,8 @@ scene.add(floor)
 
 
 
-/**
- * Lights
- */
+//!                          LIGHTS
+
 // Ambient light
 //Decreasing the brightness to 0.12
 const ambientLight = new THREE.AmbientLight('#b9d5ff', 0.12)
@@ -129,6 +134,8 @@ window.addEventListener('resize', () =>
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 
+
+//!                          CAMERAS 
 /**
  * Camera
  */
@@ -138,6 +145,14 @@ camera.position.x = 4
 camera.position.y = 2
 camera.position.z = 5
 scene.add(camera)
+
+//TODO:      GUI - Prespective Camera
+
+const camera1 = gui.addFolder('PrespectiveCamera')
+camera1.add(camera.position, 'x').min(-10).max(10).step(0.01).name('x')
+camera1.add(camera.position, 'y').min(-10).max(10).step(0.01).name('y')
+camera1.add(camera.position, 'z').min(-10).max(10).step(0.01).name('z')
+
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
