@@ -99,6 +99,8 @@ const roof = new THREE.Mesh(
 
 )
 
+
+
 roof.position.y = 2.5 + 0.5
 roof.rotation.y = Math.PI/ 4
 
@@ -130,6 +132,8 @@ door.position.y = 1
 door.position.z= 2 + 0.01
 
 house.add(door)
+
+
 
 //Bushes
 
