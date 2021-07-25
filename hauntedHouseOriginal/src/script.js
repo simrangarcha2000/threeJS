@@ -64,6 +64,41 @@ const grassHeightTexture = textureLoader.load('/textures/grass/height.png')
 const grassNormalTexture = textureLoader.load('/textures/grass/normal.jpg')
 const grassRoughnessTexture = textureLoader.load('/textures/grass/roughness.jpg')
 
+const woodColorTexture = textureLoader.load('/textures/wood/basecolor.jpg')
+const woodAmbientOcclusionTexture = textureLoader.load('/textures/wood/ambientOcclusion.jpg')
+const woodHeightTexture = textureLoader.load('/textures/wood/height.png')
+const woodNormalTexture = textureLoader.load('/textures/wood/normal.jpg')
+const woodRoughnessTexture = textureLoader.load('/textures/wood/roughness.jpg')
+
+
+const fabricColorTexture = textureLoader.load('/textures/fabric/basecolor.jpg')
+const fabricAmbientOcclusionTexture = textureLoader.load('/textures/fabric/ambientOcclusion.jpg')
+const fabricHeightTexture = textureLoader.load('/textures/fabric/height.png')
+const fabricNormalTexture = textureLoader.load('/textures/fabric/normal.jpg')
+const fabricRoughnessTexture = textureLoader.load('/textures/fabric/roughness.jpg')
+
+
+const fabricMaterial = new THREE.MeshStandardMaterial({
+    map:fabricColorTexture,
+    aoMap: fabricAmbientOcclusionTexture,
+    displacementMap: fabricHeightTexture,
+    displacementScale: 0.001,
+    normalMap: fabricNormalTexture,
+    roughnessMap: fabricRoughnessTexture,
+    roughness: 0.9
+})
+
+const woodMaterial = new THREE.MeshStandardMaterial({
+    map: woodColorTexture,
+    aoMap: woodAmbientOcclusionTexture,
+    displacementMap: woodHeightTexture,
+    displacementScale: 0.001,
+    normalMap: woodNormalTexture,
+    roughnessMap: woodRoughnessTexture,
+    roughness: 0.9
+})
+
+
 const cylinderWallMaterial = new THREE.MeshStandardMaterial({
     map: cylinderWallsColorTexture,
     aoMap: cylinderWallsAmbientOcclusionTexture,
@@ -140,9 +175,7 @@ scene.add(swing)
 
 const swingStandLeft = new THREE.Mesh(
     new THREE.BoxBufferGeometry(0.2,4.5,0.2),
-    new THREE.MeshStandardMaterial({
-        color: '#a16d3f'
-    })
+    woodMaterial
 )
 swing.add(swingStandLeft);
 swing.position.set(3,2.25,-9)
@@ -172,11 +205,7 @@ swingStringRight.scale.set(0.2,0.7,0.2)
 
 const swingSeats = new THREE.Mesh(
     new THREE.BoxGeometry(1,0.2,1.8),
-    new THREE.MeshStandardMaterial({
-        color: "brown",
-        metalness: 0.5,
-        roughness: 1
-    })
+    woodMaterial
 
 )
 
@@ -186,54 +215,498 @@ swingSeat.add(swingStringLeft)
 swingSeat.add(swingStringRight)
 swingSeat.add(swingSeats)
 
+
 //!                 WITCH
+const witch = new THREE.Group();
+scene.add(witch)
 
-
-
-//!                  TREES
-
-const trees = new THREE.Group()
-scene.add(trees)
-
-const branch = new THREE.Mesh(
-    new THREE.BoxGeometry(0.2,0.2,4),
+const headWitch = new THREE.Mesh(
+    new THREE.SphereGeometry(0.4,10,10),
     new THREE.MeshStandardMaterial({
-        color: 'brown'
+        color: "#c4a378"
     })
 )
 
-branch.rotation.x = Math.PI /2
-branch.position.set(-3,2,-5)
+const witchNeck = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.2,0.2, 0.09,20),
+    fabricMaterial
+)
+witchNeck.position.set(0,-0.4,0)
 
-trees.add(branch)
+const witchTop = new THREE.Mesh(
+    new THREE.ConeGeometry(0.25,0.9,20),
+    fabricMaterial
+)
+witchTop.position.set(0,-0.4,0)
 
-const verticesOfCube = [
-    -1,-1,-1,    1,-1,-1,    1, 1,-1,    -1, 1,-1,
-    -1,-1, 1,    1,-1, 1,    1, 1, 1,    -1, 1, 1,
-];
 
-const indicesOfFaces = [
-    2,1,0,    0,3,2,
-    0,4,7,    7,3,0,
-    0,1,5,    5,4,0,
-    1,2,6,    6,5,1,
-    2,3,7,    7,6,2,
-    4,5,6,    6,7,4
-];
 
-const leaves = new THREE.Mesh(
-    new THREE.PolyhedronGeometry( verticesOfCube, indicesOfFaces, 6, 2 ),
+const witchSkirt = new THREE.Mesh(
+    new THREE.SphereGeometry(0.8,32,32, 5, 30, 2, 2.5),
+    fabricMaterial
+)
+witchSkirt.rotation.set(3.2,0,0)
+witchSkirt.position.set(0.02,-2.302,0.019)
+witchSkirt.scale.set(1,2,1)
+
+const leg01 = new THREE.Mesh(
+    new THREE.CylinderBufferGeometry(0.03,0.03,1),
     new THREE.MeshStandardMaterial({
-        color: 'green'
+        color: "#c4a378"
     })
 )
 
-leaves.scale.set(0.2,0.4,0.2)
-leaves.position.set(-3,4,-5)
+leg01.position.set(0,-2,0.2)
 
-trees.add(leaves)
+const leg02 = new THREE.Mesh(
+    new THREE.CylinderBufferGeometry(0.03,0.03,1),
+    new THREE.MeshStandardMaterial({
+        color: "#c4a378"
+    })
+)
 
-//!                 OTHER TREES
+leg02.position.set(0,-2,-0.2)
+
+const shoe01 = new THREE.Mesh(
+    new THREE.BoxBufferGeometry(0.2,0.09,0.3),
+    fabricMaterial
+)
+shoe01.position.set(0.1,-2.5,-0.2)
+shoe01.rotation.y = Math.PI/2
+
+const shoe02 = new THREE.Mesh(
+    new THREE.BoxBufferGeometry(0.2,0.09,0.3),
+    fabricMaterial
+)
+shoe02.position.set(0.1,-2.5,0.2)
+shoe02.rotation.y = Math.PI/2
+
+const witchHair = new THREE.Mesh(
+    new THREE.CylinderBufferGeometry(0.5, 0.4, 1, 10),
+    new THREE.MeshStandardMaterial({
+        color: "black",
+        roughness: 0.8,
+        metalness: 0.4
+    })
+)
+witchHair.position.set(-0.3,-0.3,0)
+
+const witchHat = new THREE.Mesh(
+    new THREE.ConeBufferGeometry(0.9, 0.9, 32),
+    fabricMaterial
+)
+witchHat.position.set(-0.3,0.55,0)
+
+const eye01 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.05, 0.1, 32),
+    new THREE.MeshStandardMaterial({
+        color: "white"
+    })
+)
+eye01.position.set(0.35,0,-0.2)
+
+const eye02 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.05, 0.1, 32),
+    new THREE.MeshStandardMaterial({
+        color: "white"
+    })
+)
+eye02.position.set(0.35,0,0.2)
+
+const nose01 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.02, 0.03, 32),
+    new THREE.MeshStandardMaterial({
+        color: "white"
+    })
+)
+nose01.position.set(0.37,-0.1,0.02)
+
+const nose02 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.02, 0.03, 32),
+    new THREE.MeshStandardMaterial({
+        color: "white"
+    })
+)
+nose02.position.set(0.37,-0.1,-0.02)
+
+const mouth01 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.025, 0.03, 32),
+    new THREE.MeshStandardMaterial({
+        color: "white"
+    })
+)
+mouth01.position.set(0.37,-0.22,-0.08)
+
+const mouth02 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.018, 0.03, 32),
+    new THREE.MeshStandardMaterial({
+        color: "white"
+    })
+)
+mouth02.position.set(0.37,-0.22,0.04)
+
+const mouth03 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.023, 0.03, 32),
+    new THREE.MeshStandardMaterial({
+        color: "white"
+    })
+)
+mouth03.position.set(0.37,-0.21,0)
+
+const mouth04 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.015, 0.035, 32),
+    new THREE.MeshStandardMaterial({
+        color: "white"
+    })
+)
+mouth04.position.set(0.37,-0.21,-0.04)
+
+const mouth05 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.025, -0.01, 32),
+    new THREE.MeshStandardMaterial({
+        color: "white"
+    })
+)
+mouth05.position.set(0.37,-0.21,0.08)
+
+witch.position.set(5,2.6,5)
+witch.add(headWitch)
+witch.add(witchNeck)
+witch.add(witchTop)
+witch.add(witchSkirt)
+witch.add(leg01)
+witch.add(leg02)
+witch.add(shoe01)
+witch.add(shoe02)
+witch.add(witchHair)
+witch.add(witchHat)
+witch.add(eye01)
+witch.add(eye02)
+witch.add(nose01)
+witch.add(nose02)
+witch.add(mouth01)
+witch.add(mouth02)
+witch.add(mouth03)
+witch.add(mouth04)
+witch.add(mouth05)
+
+const witchTab = gui.addFolder('witchTab');
+witchTab.add(witchSkirt.position, 'x').min(-15).max(15).name("X").step(0.001)
+witchTab.add(witchSkirt.position, 'y').min(-15).max(15).name("y").step(0.001)
+witchTab.add(witchSkirt.position, 'z').min(-15).max(15).name("z").step(0.001)
+
+
+
+
+
+//!                  TREE WITHOUT LEAVES
+
+const branchlessTrees = new THREE.Group();
+scene.add(branchlessTrees)
+
+const b01 = new THREE.Mesh(
+    new THREE.CylinderBufferGeometry(0.2,0.2,6),
+    woodMaterial
+)
+b01.position.set(-6,3,-9)
+
+const b02 = b01.clone()
+b02.position.set(-6,5,-8)
+b02.scale.set(0.2,0.5,0.3)
+b02.rotation.z = -Math.PI/4
+b02.rotation.y = -Math.PI/2
+
+
+
+const b03 = new THREE.Mesh(
+    new THREE.CylinderBufferGeometry(0.01,0.05,1.8),
+    woodMaterial
+)
+
+b03.position.set(-6,5,-9.91)
+b03.rotation.x = -Math.PI/3
+
+const branch03 = gui.addFolder('branch03')
+branch03.add(b03.position, 'x').min(-15).max(15).step(0.01)
+branch03.add(b03.position, 'y').min(-15).max(15).step(0.01)
+branch03.add(b03.position, 'z').min(-15).max(15).step(0.01)
+branch03.add(b03.rotation, 'x').min(-15).max(15).step(0.01)
+branch03.add(b03.rotation, 'y').min(-15).max(15).step(0.01)
+branch03.add(b03.rotation, 'z').min(-15).max(15).step(0.01)
+
+const b04 = new THREE.Mesh(
+    new THREE.CylinderBufferGeometry(0.10,0.02,2.5),
+    woodMaterial
+)
+
+b04.position.set(-5.9,6.64,-9.9)
+b04.rotation.x = -10.24
+b04.rotation.y = -5.94
+
+const branch04 = gui.addFolder('branch04')
+branch04.add(b04.position, 'x').min(-15).max(15).step(0.01)
+branch04.add(b04.position, 'y').min(-15).max(15).step(0.01)
+branch04.add(b04.position, 'z').min(-15).max(15).step(0.01)
+branch04.add(b04.rotation, 'x').min(-15).max(15).step(0.01)
+branch04.add(b04.rotation, 'y').min(-15).max(15).step(0.01)
+branch04.add(b04.rotation, 'z').min(-15).max(15).step(0.01)
+
+/*const b05 = new THREE.Mesh(
+    new THREE.CylinderBufferGeometry(0.15,0.02,2.2),
+    woodMaterial
+)
+
+b05.position.set(-7.26,6.64,-9.91)
+b05.rotation.set(-9.57,-1.63,5.31)
+
+
+const branch05 = gui.addFolder('branch05')
+branch05.add(b05.position, 'x').min(-15).max(15).step(0.01)
+branch05.add(b05.position, 'y').min(-15).max(15).step(0.01)
+branch05.add(b05.position, 'z').min(-15).max(15).step(0.01)
+branch05.add(b05.rotation, 'x').min(-15).max(15).step(0.01)
+branch05.add(b05.rotation, 'y').min(-15).max(15).step(0.01)
+branch05.add(b05.rotation, 'z').min(-15).max(15).step(0.01)
+*/
+branchlessTrees.position.set(1,0,-2)
+branchlessTrees.add(b01)
+branchlessTrees.add(b02)
+branchlessTrees.add(b03)
+branchlessTrees.add(b04)
+//branchlessTrees.add(b05)
+//branchlessTrees.add(b06)
+
+
+for(let i = 0; i < 30; i++)
+{
+
+    //!                  PUMPKIN
+
+const fullPumpkin = new THREE.Group()
+scene.add(fullPumpkin)
+
+const pumpkin = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.5,20,20),
+    new THREE.MeshStandardMaterial({
+        color: '#c7680a'
+    })
+)
+
+pumpkin.position.set(2,0.50,4)
+pumpkin.scale.set(1,1.2,1.3)
+fullPumpkin.add(pumpkin)
+
+const pumpkinEyeL = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.1,20,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+
+pumpkinEyeL.position.set(2.4,0.8,4.2)
+pumpkinEyeL.scale.set(1,0.2,1)
+pumpkinEyeL.rotation.set(1.5,1,1)
+fullPumpkin.add(pumpkinEyeL)
+
+const pumpkinEyeR = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.1,20,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+pumpkinEyeR.position.set(2.4,0.8,3.7)
+pumpkinEyeR.scale.set(1,0.2,1)
+pumpkinEyeR.rotation.set(1.5,1,-1)
+fullPumpkin.add(pumpkinEyeR)
+
+const pumpkinNose= new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.05,20,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+pumpkinNose.position.set(2.5,0.6,4)
+pumpkinNose.scale.set(0.5,0.5,0.5)
+
+fullPumpkin.add(pumpkinNose)
+
+const pumpkinNoseT= new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.05,20,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+pumpkinNoseT.position.set(2.5,0.6,3.9)
+pumpkinNoseT.scale.set(0.5,0.5,0.5)
+
+fullPumpkin.add(pumpkinNoseT)
+
+
+
+
+
+const pumpkinMouth = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.4,20,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+pumpkinMouth.position.set(2.3,0.4,3.98)
+pumpkinMouth.scale.set(0.5,-0.5,1)
+
+fullPumpkin.add(pumpkinMouth)
+
+fullPumpkin.position.x = (Math.random() + 0.5) * 10
+fullPumpkin.position.z = (Math.random() - 0.6 ) * 30
+
+
+
+
+}
+
+//!   BATS
+
+for(let i = 0; i < 40; i++)
+{
+const bats = new THREE.Group();
+scene.add(bats)
+
+const batBody = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.3,20,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+batBody.scale.set(0.5,1,0.5)
+
+
+const batFace = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.15,20,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+
+batFace.position.set(0,0.3,0)
+bats.add(batFace)
+bats.add(batBody)
+
+const wingLeft = new THREE.Group()
+bats.add(wingLeft)
+
+const batWingL = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.15,20,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+batWingL.scale.set(0.5,0.8,2)
+batWingL.position.set(0,0.2,0.3)
+batWingL.rotation.set(-0.5,0,0.3)
+wingLeft.add(batWingL)
+
+const batWing1 = new THREE.Mesh(
+    new THREE.ConeBufferGeometry(0.1,0.1,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+batWing1.position.set(0,0.15,0.5)
+batWing1.rotation.set(0.7,0,0)
+wingLeft.add(batWing1)
+
+const batWing2 = new THREE.Mesh(
+    new THREE.ConeBufferGeometry(0.1,0.1,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+batWing2.position.set(0,0.05,0.3)
+batWing2.rotation.set(0.7,0,0)
+wingLeft.add(batWing2)
+
+const batWing3 = new THREE.Mesh(
+    new THREE.ConeBufferGeometry(0.1,0.1,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+batWing3.position.set(0,0.25,0.6)
+batWing3.rotation.set(1,0,0)
+wingLeft.add(batWing3)
+
+
+const wingRight = wingLeft.clone()
+wingRight.position.set(0,0.02,0.02)
+wingRight.rotation.set(6.3,9.28,0)
+bats.add(wingRight)
+
+const earBatL = new THREE.Mesh(
+    new THREE.ConeBufferGeometry(0.05,0.15,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+
+earBatL.position.set(0,0.48,0.05)
+earBatL.rotation.set(0,0.7,0)
+
+bats.add(earBatL)
+
+const earBatR = new THREE.Mesh(
+    new THREE.ConeBufferGeometry(0.05,0.15,20),
+    new THREE.MeshStandardMaterial({
+        color: 'black'
+    })
+)
+
+earBatR.position.set(0,0.48,-0.05)
+earBatR.rotation.set(0,0.7,0)
+
+bats.add(earBatR)
+/*bats.position.set(-10,20,15)
+bats.rotation.z = -Math.PI/8
+bats.rotation.x = -Math.PI/4*/
+bats.position.y = (Math.random() + 4.5 ) * 4
+bats.position.x = (Math.random() - 2) * 10
+bats.position.z = (Math.random() - 0.5 ) * 35
+const scale = Math.random() + 0.2
+bats.scale.set(scale, scale, scale)
+bats.rotation.x = -(Math.random() * Math.PI)
+bats.rotation.z = -(Math.random() * Math.PI)
+
+
+}
+
+//! GRAVE
+const graves = new THREE.Group()
+scene.add(graves)
+const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2)
+const graveMaterial = new THREE.MeshStandardMaterial({ color: '#b2b6b1' })
+
+for(let i = 0; i < 15; i++)
+{
+    const angle = Math.random() * Math.PI * 2 // Random angle
+    const radius = 1 + Math.random() * 6      // Random radius
+    const x = Math.cos(angle) * radius        // Get the x position using cosinus
+    const z = Math.sin(angle) * radius        // Get the z position using sinus
+
+    // Create the mesh
+    const grave = new THREE.Mesh(graveGeometry, graveMaterial)
+
+    // Position
+    grave.position.set(x - 6 , 0.3, z + 13 )                              
+
+    // Rotation
+    grave.rotation.z = (Math.random() - 0.5) * 0.4
+    grave.rotation.y = Math.PI/2
+
+    // Add to the graves container
+    grave.castShadow = true
+    graves.add(grave)
+
+}
+
 
 //!                  PORTION BOWL
 
@@ -325,18 +798,7 @@ backWall.position.set(-14.7, 7.5, 0)
 
 house.add(backWall)
 
-//* SHAPE 
 
-const x = 0, y = 0;
-
-const heartShape = new THREE.Shape();
-
-
-
-const heartGeometry = new THREE.Mesh( 
-    new THREE.ShapeGeometry( heartShape ), 
-    new THREE.MeshBasicMaterial( { color: "red" } ) ) ;
-scene.add( heartGeometry );
 
 //*TODO:                                ROOF
 
@@ -508,7 +970,7 @@ windowTop4.position.set(-12.3,12,-4)
 house.add(windowTop4)
 
 // Graves
-const graves = new THREE.Group()
+/*const graves = new THREE.Group()
 scene.add(graves)
 
 const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2)
@@ -533,7 +995,7 @@ for(let i = 0; i < 60; i++)
 
     // Add to the graves container
     graves.add(grave)
-}
+}*/
 
 //*TODO:                                FLOOR
 
@@ -548,8 +1010,10 @@ floor.geometry.setAttribute(
     'uv2',
     new THREE.Float32BufferAttribute(floor.geometry.attributes.uv.array, 2)
 )
-scene.add(floor)
 
+
+scene.add(floor)
+floor.receiveShadow = true
 
 
 
@@ -612,6 +1076,8 @@ scene.add(ambientLight)
 // Directional light
 const moonLight = new THREE.DirectionalLight('#b9d5ff', 0.12)
 moonLight.position.set(4, 5, - 2)
+
+moonLight.castShadow = true
 gui.add(moonLight, 'intensity').min(0).max(1).step(0.001)
 gui.add(moonLight.position, 'x').min(- 5).max(5).step(0.001)
 gui.add(moonLight.position, 'y').min(- 5).max(5).step(0.001)
@@ -622,7 +1088,7 @@ scene.add(moonLight)
 //Door Light
 const doorLight = new THREE.PointLight('#ff7d46', 1, 7)
 doorLight.position.set(-6.3, 3, 0)
-
+doorLight.castShadow = true
 house.add(doorLight)
 
 const doorLightTop = doorLight.clone()
@@ -638,11 +1104,35 @@ house.add(doorLightTop)
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
+
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setClearColor('#262837')
 renderer.shadowMap.enabled = true
+
+/**
+ * ghost1.castShadow = true
+ * ghost2.castShadow = true
+ * ghost3.castShadow = true
+ */
+
 renderer.shadowMap.type = THREE.PCFShadowMap
+
+
+/**
+  * Shadows
+  */
+moonLight.castShadow = true
+doorLight.castShadow = true
+
+
+
+floor.receiveShadow = true
+doorLight.shadow.mapSize.width = 256
+doorLight.shadow.mapSize.height = 256
+doorLight.shadow.camera.far = 7
+
+
 
 /**
  * GSAP ANIMATION
